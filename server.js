@@ -4,15 +4,18 @@ const app = express()
 const sequelize = require("./config/database")
 const User = require("./models/user")
 const authRoutes = require("./routes/authRoutes")
+const Course = require("./models/course")
+const courseRoutes = require("./routes/courseRoutes")
 const PORT = process.env.PORT || 3500
 //middleware
 app.use(express.json())
 
+app.use("/api/course", courseRoutes)
 app.use("/api/auth", authRoutes)
 
-app.get("/", (req, res) => {
-    res.send("hello world")
-})
+// app.get("/", (req, res) => {
+//     res.send("hello world")
+// }) 
 
 sequelize.authenticate().then(() => {
     console.log("database connected")
@@ -20,6 +23,8 @@ sequelize.authenticate().then(() => {
     console.log("DB Error")
 })
 
-sequelize.sync().then()
+sequelize.sync({
+    alter: true
+}).then()
 
 app.listen(PORT, () => console.log(`server is running on port ${PORT}`))

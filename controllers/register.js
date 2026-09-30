@@ -2,7 +2,7 @@ const User = require("../models/user")
 const bcrypt = require("bcryptjs")
 
 const register = async (req, res) =>{
-    const { first_name, last_name, email, password } = req.body
+    const { first_name, last_name, email, password, role } = req.body
     const cleanemail = email.toLowerCase().trim()
     try {
         const user = await User.findOne({where: {email: cleanemail}})
@@ -16,10 +16,11 @@ const register = async (req, res) =>{
             first_name,
             last_name,
             email: cleanemail,
-            password: hashedpwd
+            password: hashedpwd,
+            role: role || "student"
         })
         return res.status(201).json({
-            message: "User Registered Successfully",
+            message: "Registered Successfully",
             data: newuser
         })
     } catch (error) {

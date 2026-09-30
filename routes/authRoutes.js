@@ -4,8 +4,13 @@ const { register } = require("../controllers/register")
 const User = require("../models/user")
 const { login } = require("../controllers/login")
 const authMiddleware = require("../middleware/authMiddleware")
+const { forgetPassword, resetPassword} = require("../controllers/passwordReset")
 
 router.post("/register", register)
+
+router.post("/forget-pwd", forgetPassword)
+
+router.post("/reset-pwd/:token", resetPassword)
 
 router.post("/login", login)
 
