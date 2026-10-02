@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database.js")
+const User = require("./user")
 
 const course = sequelize.define("course", {
     id: {
@@ -24,6 +25,11 @@ const course = sequelize.define("course", {
             key: "id"
         }
     }
+})
+
+course.belongsTo(User, {
+    foreignKey: "teacherId",
+    as: "teacher"
 })
 
 module.exports = course;

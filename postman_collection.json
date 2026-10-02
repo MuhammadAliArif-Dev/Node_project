@@ -405,6 +405,121 @@
 					"response": []
 				},
 				{
+					"name": "Get Course By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/course/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"course",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course By Title",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/course/title/:title",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"course",
+								"title",
+								":title"
+							],
+							"variable": [
+								{
+									"key": "title",
+									"value": "Modern JavaScript & Node.js"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course (Teacher or Super Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Advanced Modern JavaScript & Node.js\",\n  \"description\": \"Updated course curriculum with DSA & System Design.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/course/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"course",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Course (Student Attempt - Expected 403 Forbidden)",
 					"request": {
 						"auth": {
@@ -437,6 +552,121 @@
 								"api",
 								"course",
 								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enroll in Course (Student Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/course/:courseId/enroll",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"course",
+								":courseId",
+								"enroll"
+							],
+							"variable": [
+								{
+									"key": "courseId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Enrolled Courses (Student Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/course/my-courses",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"course",
+								"my-courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Grade to Student (Teacher or Super Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"grade\": \"A\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/course/:courseId/assign-grade/:studentId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"course",
+								":courseId",
+								"assign-grade",
+								":studentId"
+							],
+							"variable": [
+								{
+									"key": "courseId",
+									"value": "1"
+								},
+								{
+									"key": "studentId",
+									"value": "7"
+								}
 							]
 						}
 					},
