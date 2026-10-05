@@ -6,12 +6,14 @@ const User = require("./models/user")
 const authRoutes = require("./routes/authRoutes")
 const Course = require("./models/course")
 const courseRoutes = require("./routes/courseRoutes")
+const gradeRoutes = require("./routes/gradeRoutes")
 const PORT = process.env.PORT || 3500
 //middleware
 app.use(express.json())
 
 app.use("/api/course", courseRoutes)
 app.use("/api/auth", authRoutes)
+app.use("/api/grade", gradeRoutes)
 
 // app.get("/", (req, res) => {
 //     res.send("hello world")

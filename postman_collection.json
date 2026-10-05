@@ -621,7 +621,11 @@
 						}
 					},
 					"response": []
-				},
+			]
+		},
+		{
+			"name": "3. Grades",
+			"item": [
 				{
 					"name": "Assign Grade to Student (Teacher or Super Admin)",
 					"request": {
@@ -647,13 +651,13 @@
 							"raw": "{\n  \"marks\": 88\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/course/:courseId/assign-grade/:studentId",
+							"raw": "{{baseUrl}}/api/grade/:courseId/assign-grade/:studentId",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
-								"course",
+								"grade",
 								":courseId",
 								"assign-grade",
 								":studentId"
@@ -688,14 +692,56 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/course/my-grades",
+							"raw": "{{baseUrl}}/api/grade/my-grades",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
-								"course",
+								"grade",
 								"my-grades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Specific Student Grade (Teacher or Super Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/grade/courseid/:courseId/studentid/:studentId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"grade",
+								"courseid",
+								":courseId",
+								"studentid",
+								":studentId"
+							],
+							"variable": [
+								{
+									"key": "courseId",
+									"value": "1"
+								},
+								{
+									"key": "studentId",
+									"value": "7"
+								}
 							]
 						}
 					},
