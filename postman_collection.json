@@ -644,7 +644,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"grade\": \"A\"\n}"
+							"raw": "{\n  \"marks\": 88\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/course/:courseId/assign-grade/:studentId",

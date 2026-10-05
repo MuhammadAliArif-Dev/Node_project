@@ -172,7 +172,7 @@ const getMyEnrolledCourses = async (req, res) => {
             include: [{
                 model: Course,
                 as: "enrolledCourses",
-                through: { attributes: ["grade"] } 
+                through: { attributes: ["marks", "grade"] } 
             }]
         });
 
@@ -186,16 +186,25 @@ const getMyEnrolledCourses = async (req, res) => {
     }
 };
 
+const calculateGrade = (marks) => {
+    if(marks >= 85) return "A"
+    if(marks >= 70) return "B"
+    if(marks >= 55) return "C"
+    if(marks >= 40) return "D"
+    return "F"
+
+}
+
 const assignGrade = async (req, res) => {
     const { courseId } = req.params;
     const studentId = req.params.studentId || req.body.studentId;
-    const { grade } = req.body;
-    const validGrades = ["A", "B", "C", "D", "F"];
+    // const { grade } = req.body;
+    const { marks } = req.body;
     try {
-        if (!validGrades.includes(grade)) {
+        if(marks === undefined || marks < 0 || marks > 100){
             return res.status(400).json({
-                message: "Invalid grade! Allowed grades are: A, B, C, D, F"
-            });
+                message: "Marks must be between 0 and 100"
+            })
         }
 
         const course = await Course.findByPk(courseId);
@@ -217,11 +226,13 @@ const assignGrade = async (req, res) => {
                 message: "Student is not enrolled in this course."
             });
         }
-
-        enrollment.grade = grade;
+        
+        const autograde = calculateGrade(marks)
+        enrollment.marks = marks
+        enrollment.grade = autograde
         await enrollment.save();
         return res.status(200).json({
-            message: `Grade '${grade}' assigned successfully to student!`,
+            message: `Marks ('${marks}') and Grade ('${autograde}') assigned successfully!`,
             data: enrollment
         });
 
