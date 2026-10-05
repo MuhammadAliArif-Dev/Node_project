@@ -671,6 +671,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get My Academic Grades (Student Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/course/my-grades",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"course",
+								"my-grades"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

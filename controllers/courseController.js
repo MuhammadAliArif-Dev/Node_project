@@ -1,6 +1,7 @@
 const Course = require("../models/course")
 const User = require("../models/user")
 const Enrollment = require("../models/enrollment")
+const Grade = require("../models/grade")
 
 const createCourse = async (req, res ) => {
     const {title, description, teacherId} = req.body
@@ -172,7 +173,7 @@ const getMyEnrolledCourses = async (req, res) => {
             include: [{
                 model: Course,
                 as: "enrolledCourses",
-                through: { attributes: ["marks", "grade"] } 
+                through: { attributes: [] } 
             }]
         });
 
@@ -227,13 +228,25 @@ const assignGrade = async (req, res) => {
             });
         }
         
-        const autograde = calculateGrade(marks)
-        enrollment.marks = marks
-        enrollment.grade = autograde
-        await enrollment.save();
+        const autoGrade = calculateGrade(marks)
+
+        let gradeRecord = await Grade.findOne({where: {studentId, courseId}})
+        if(gradeRecord) {
+            gradeRecord.marks = marks
+            gradeRecord.grade = autoGrade
+            await gradeRecord.save()
+        }else {
+            gradeRecord = await Grade.create({
+                studentId,
+                courseId,
+                marks,
+                grade: autoGrade
+            })
+        }
+
         return res.status(200).json({
-            message: `Marks ('${marks}') and Grade ('${autograde}') assigned successfully!`,
-            data: enrollment
+            message: `Marks ('${marks}') and Grade ('${autoGrade}') assigned successfully!`,
+            data: gradeRecord
         });
 
     } catch (error) {
@@ -241,7 +254,26 @@ const assignGrade = async (req, res) => {
     }
 };
 
-
+const getMyGrades = async (req, res) => {
+    try{
+        const grades = await Grade.findAll({
+            where: { studentId: req.user.id},
+            include: [{
+                model: Course,
+                as: "course",
+                attributes: ["id", "title"]
+            }]
+        })
+        return res.status(200).json({
+            message: "My Grades",
+            data: grades
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message
+        })
+    }
+}
 
 module.exports = {createCourse,
                 getAllCourses, 
@@ -250,5 +282,6 @@ module.exports = {createCourse,
                 updateCourse, 
                 enrollInCourse,
                 getMyEnrolledCourses,
-                assignGrade
+                assignGrade,
+                getMyGrades
             }

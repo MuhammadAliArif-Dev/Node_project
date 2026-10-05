@@ -24,17 +24,6 @@ const Enrollment = sequelize.define("Enrollment", {
             model: "courses",
             key: "id"
         }
-    },
-    marks: {
-        type: DataTypes.FLOAT,
-        allowNull: true,
-        defaultValue: null,
-        validate: { min: 0, max: 100 }
-    },
-    grade: {
-        type: DataTypes.ENUM("A", "B", "C", "D", "F"),
-        allowNull: true,
-        defaultValue: null
     }
 })
 
